@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>Sample Application</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link href="https://fonts.googleapis.com/css?family=Merriweather:300,400%7CPoppins:400,500,600" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="../../vendor/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../../css/main.css">
+
+	<script src="/components/jquery/jquery.min.js"></script>
+  <script src="/components/jquery/purl.js"></script>
+  <script src="/components/tether/js/tether.min.js"></script>
+
+	<script>
+    // SETUP VARIABLES
+    var scrollToAppForm = false;
+
+    // Variables for API #1 - Authorise API
+    var authApiUrl; // URL for authorise API
+    var clientId; // your app_id/client_id provided to you during onboarding
+    var redirectUrl; //callback url for your application
+
+    var attributes; // the attributes you are retrieving for your application to fill the form
+    var authLevel; // the auth level, determines the flow
+    // the purpose of your data retrieval
+    var purpose = "demonstrating MyInfo Biz APIs";
+
+    // randomly generated state
+    var state = "123";
+
+    window.onload = function(e) {
+      // invoke AJAX call to get the clientId & redirectURL from serverside
+      $.ajax({
+        url: "/getEnv",
+        data: {},
+        type: "GET", // get from serverside
+        success: function(data) {
+          // successful response from serverside
+          if (data.status == "OK") { // successful
+            // fill up the application form
+            clientId = data.clientId;
+            redirectUrl = data.redirectUrl;
+            authApiUrl = data.authApiUrl;
+            attributes = data.attributes;
+            authLevel = data.authLevel;
+          } else {
+            // error occured
+            alert("ERROR:" + JSON.stringify(data.msg));
+          }
+
+        }
+      });
+    }
+
+    // main function for handling form events
+    $(function() {
+
+      $("#formAuthorise").submit(function(event) {
+        event.preventDefault();
+        callAuthoriseApi();
+      });
+      $("#formApplication").submit(function(event) {
+        event.preventDefault();
+        // add code here to submit the application form back to server for processing
+        $('#complete').toggleClass('hidden');
+      });
+
+    });
+
+    // Function for calling API #1 - Authorise
+    function callAuthoriseApi() {
+      // Formulate the Authorise URL with the required parameters.
+      // Redirect to the formulated Authorise URL.
+      // t2step1 PASTE CODE HERE
+      var authoriseUrl = authApiUrl +
+        "?client_id=" + clientId +
+        "&attributes=" + attributes +
+        "&purpose=" + purpose +
+        "&state=" + state +
+        "&redirect_uri=" + redirectUrl;
+
+			console.log(authoriseUrl);
+      window.location = authoriseUrl;
+      // t2step1 END PASTE CODE
+    }
+
+
+    // Function for calling server side APIs (token & entity-person) to get the entity-person data for prefilling form
+    function callServerAPIs() {
+      var authCode = $.url(this.location.href).param('code');
+      //alert ("authorisation code="+authCode);
+
+      // invoke AJAX call from frontend clientside to your backend serverside
+      $.ajax({
+        url: "/getentitypersonData",
+        data: {
+          code: authCode,
+        },
+        type: "POST", // post to serverside
+        success: function(data) {
+          //alert ("data:"+JSON.stringify(data));
+          // successful response from serverside
+          if (data.status == "OK") { // successful
+            // fill up the application form
+            prefillForm(data.text);
+          } else {
+            // error occured
+            alert("ERROR:" + JSON.stringify(data.msg));
+          }
+        }
+      });
+    }
+    // Prefill Online Form with MyInfo data
+    function prefillForm(data) {
+      // prefill form data
+      var formValues = null;
+      // t2step7 PASTE CODE HERE
+
+      var formValues = {
+        "uinfin": data.uinfin,
+        "name": data.person.name.value,
+        "sex": data.person.sex.value,
+        "race": data.person.race.value,
+        "nationality": data.person.nationality.value,
+        "dob": data.person.dob.value,
+        "email": data.person.email.value,
+        "mobileno": toStr(data.person.mobileno, 'PHONENUMLOCAL'),
+        "regadd": toStr(data.person.regadd, 'ADDRESSLOCAL'),
+        "housingtype": toStr(data.person, 'HOUSINGTYPE'),
+        "marital": data.person.marital.value,
+        "edulevel": data.person.edulevel.value,
+        // entity details
+        "uen": data.entity['basic-profile']['uen'],
+        "entity-name": data.entity['basic-profile']['entity-name'],
+        "entity-type": data.entity['basic-profile']['entity-type'],
+        "entity-status": data.entity['basic-profile']['entity-status'],
+        "registration-date": data.entity['basic-profile']['registration-date'],
+        "business-expiry-date": data.entity['basic-profile']['business-expiry-date'],
+        "primary-ssic": toStr(data.entity, 'PRIMARYSSIC'),
+        "secondary-ssic": toStr(data.entity, 'SECONDARYSSIC'),
+        "enregadd": toStr(data.entity, 'ENTITYADDRESS'),
+				"position": data.entity['appointments'][0]['position-desc'],
+				"appoint-ic": data.entity['appointments'][0]['person-reference']['idno'],
+				"appoint-name": data.entity['appointments'][0]['person-reference']['idno'],
+				"appoint-date": data.entity['appointments'][0]['appointment-date']
+      };
+
+      // t2step7 END PASTE CODE
+
+      // Populate values
+      populate('#formApplication', formValues);
+
+    }
+
+    // CALLBACK HANDLER
+    if (this.location.href.indexOf("callback?") > -1) {
+      scrollToAppForm = true;
+
+      // call the backend server APIs
+      callServerAPIs();
+    }
+
+    function populate(frm, data) {
+      $.each(data, function(key, value) {
+        $('[name=' + key + ']', frm).val(value);
+        $('[name=' + key + ']', frm).prop('disabled', true);
+      });
+    }
+
+    function toStr(data, type) {
+      if (data == undefined)
+        return null;
+
+      if (type == 'ADDRESSLOCAL') {
+        var val = "";
+        if (data.block !== undefined && data.block != "")
+          val = val + "BLK " + data.block;
+        if (data.building !== undefined && data.building != "")
+          val = val + " " + data.building;
+        if (data.floor !== undefined && data.floor != "")
+          val = val + " " + data.floor;
+        if (data.unit !== undefined && data.unit != "")
+          val = val + "-" + data.unit;
+        if (data.street !== undefined && data.street != "")
+          val = val + " " + data.street;
+        if (data.postal !== undefined && data.postal != "")
+          val = val + " S(" + data.postal + ")";
+        return val;
+      } else if (type == 'PHONENUMLOCAL') {
+        var val = data.prefix + data.code + " " + data.nbr;
+        return val;
+      } else if (type == 'MONEY') {
+        var val = data.value.replace(/,/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return val;
+      } else if (type == 'HOUSINGTYPE') {
+        var val = "";
+        if (data.housingtype.value != undefined && data.housingtype.value !== "")
+          val = data.housingtype.value;
+        else if (data.hdbtype.value != undefined && data.hdbtype.value !== "")
+          val = data.hdbtype.value;
+        return val;
+      } else if (type == 'PRIMARYSSIC') {
+        var val = data['basic-profile']['primary-activity-code'] + " - " + data['basic-profile']['primary-activity-desc'];
+        return val;
+      } else if (type == 'SECONDARYSSIC') {
+        var val = data['basic-profile']['secondary-activity-code'] + " - " + data['basic-profile']['secondary-activity-desc'];
+        return val;
+      } else if (type == 'ENTITYADDRESS') {
+        var val = "";
+        var adddata =  data['addresses'];
+        if (adddata[0] !== undefined) {
+          adddata = adddata[0];
+        }
+        var standard = adddata['standard'];
+        if (standard == 'D') {
+          var add = adddata['address-sg'];
+          if (add.block !== undefined && add.block != "")
+            val = val + "BLK " + add.block;
+          if (add.building !== undefined && add.building != "")
+            val = val + " " + add.building;
+          if (add.floor !== undefined && add.floor != "")
+            val = val + " " + add.floor;
+          if (add.unit !== undefined && add.unit != "")
+            val = val + "-" + add.unit;
+          if (add.street !== undefined && add.street != "")
+            val = val + " " + add.street;
+          if (add.postal !== undefined && add.postal != "")
+            val = val + " S(" + add.postal + ")";
+        } else {
+          var add = adddata['address-unformatted'];
+          if (add['line-1'] !== undefined && add['line-1'] != "")
+            val = val + add['line-1'];
+          if (add['line-2'] !== undefined && add['line-2'] != "")
+            val = val + add['line-2'];
+        }
+        return val;
+      } else {
+        return null;
+      }
+    }
+  </script>
+
+</head>
+
+<body class="myinfobiz">
+		<section class="hero-area">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-6 col-md-6 d-flex align-items-center full-screen-height">
+						<div class="hero-content-div">
+							<div class="hero-content">
+								<h1>MyInfo Business Demo Application</h1>
+								<p>This demo is an example of how your application should integrate with MyInfo Business.</p>
+								<hr>
+								<p>To start the SingPass login and consent process, click on the "Retrieve MyInfo" button below.</p>
+							</div>
+							<form id="formAuthorise">
+			          <a href="#" onclick="$(this).closest('form').submit()" class="btn2">Retrieve MyInfo Biz</a>
+        			</form>
+							<hr>
+							<small>Note: refer to the <a href="https://ndi-api.app.gov.sg/dev/quickref" target="_BLANK">Quick Reference Guide</a> on the MyInfo Developer & Partner Portal for the test accounts to be used.</small>
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6 d-flex align-items-center full-screen-height mobile-hidden">
+						<div class="right-img">
+							<div data-depth="0.40" class="layer">
+								<div class="right-img-bg-1"></div>
+							</div>
+							<div data-depth="0.30" class="layer">
+								<div class="right-img-bg-2"></div>
+							</div>
+							<div data-depth="0.40" class="layer">
+								<img class="right-img-img" src="../../images/banner-biz.png" alt="">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<a href="#form" class="form-link">
+			<p>form below</p>
+		</a>
+
+		<section id="form" class="lone-about-us section-padding">
+			<form id="formApplication" class="toggle_content">
+			<div class="container">
+				<div class="single-heading">
+					<h2>Form</h2>
+					<h4>Application pre-filled with MyInfo Business!</h4>
+				</div>
+				<div class="row">
+					<div class="col-md-12 mb-4">
+						<p style="text-align:center;">Confirm your details below and click "Submit Application".</p>
+					</div>
+				</div>
+				<div class="row justify-content-around">
+						<div class="col-md-12 col-lg-5 form-box mb-4">
+							<h3>Personal Information</h3>
+							<hr>
+							<div class="form-group">
+								<label>NRIC</label>
+								<div class="input-group">
+									<input type="text" class="form-control" name="uinfin" value="" placeholder="" required="">
+								</div>
+							</div>
+							<div class="form-group">
+								<label>Full Name</label>
+								<div class="input-group">
+									<input type="text" class="form-control" name="name" value="" placeholder="" required="">
+								</div>
+							</div>
+							<div class="form-group">
+								<label>Sex</label>
+								<div class="input-group">
+									<input type="text" class="form-control" name="sex" value="" placeholder="" required="">
+								</div>
+							</div>
+								<div class="form-group">
+									<label>Race</label>
+									<div class="input-group">
+										<input type="text" class="form-control" name="race" value="" placeholder="" required="">
+									</div>
+								</div>
+								<div class="form-group">
+									<label>Nationality</label>
+									<div class="input-group">
+										<input type="text" class="form-control" name="nationality" value="" placeholder="" required="">
+									</div>
+								</div>
+								<div class="form-group">
+									<label>Date Of Birth</label>
+									<div class="input-group">
+										<input type="text" class="form-control" name="dob" value="" placeholder="" required="">
+									</div>
+								</div>
+								<hr>
+								<div class="form-group">
+									<label>Email</label>
+									<div class="input-group">
+										<input type="text" class="form-control" name="email" value="" placeholder="" required="">
+									</div>
+								</div>
+								<div class="form-group">
+									<label>Mobile Number</label>
+									<div class="input-group">
+										<input type="text" class="form-control" name="mobileno" value="" placeholder="" required="">
+									</div>
+								</div>
+								<div class="form-group">
+									<label>Registered Address</label>
+									<div class="input-group">
+										<textarea cols="50" rows="3" name="regadd"></textarea>
+									</div>
+								</div>
+								<div class="form-group">
+									<label>Housing Type</label>
+									<div class="input-group">
+										<input type="text" class="form-control" name="housingtype" value="" placeholder="" required="">
+									</div>
+								</div>
+								<hr>
+								<div class="form-group">
+									<label>Marital Status</label>
+									<div class="input-group">
+										<input type="text" class="form-control" name="marital" value="" placeholder="" required="">
+									</div>
+								</div>
+								<div class="form-group">
+									<label>Highest Education Level</label>
+									<div class="input-group">
+										<input type="text" class="form-control" name="edulevel" value="" placeholder="" required="">
+									</div>
+								</div>
+						</div>
+						<div class="col-md-12 col-lg-5 form-box mb-4">
+							<h3>Corporate Information</h3>
+							<hr>
+							<div class="form-group">
+								<label>UEN</label>
+								<div class="input-group">
+									<input type="text" class="form-control" name="uen" placeholder="" required="">
+								</div>
+							</div>
+							<div class="form-group">
+								<label>Entity Name</label>
+								<div class="input-group">
+									<input type="text" class="form-control" name="entity-name" placeholder="" required="">
+								</div>
+							</div>
+							<div class="form-group">
+								<label>Entity Type</label>
+								<div class="input-group">
+									<input type="text" class="form-control" name="entity-type" placeholder="" required="">
+								</div>
+							</div>
+							<div class="form-group">
+								<label>Entity Status</label>
+								<div class="input-group">
+									<input type="text" class="form-control" name="entity-status" placeholder="" required="">
+								</div>
+							</div>
+							<div class="form-group">
+								<label>Registered Address</label>
+								<div class="input-group">
+									<textarea cols="50" rows="3" name="enregadd"></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label>Registration Date</label>
+								<div class="input-group">
+									<input type="text" class="form-control" name="registration-date" placeholder="" required="">
+								</div>
+							</div>
+							<hr>
+							<div class="form-group">
+								<label>Primary SSIC</label>
+								<div class="input-group">
+									<input type="text" class="form-control" name="primary-ssic" placeholder="" required="">
+								</div>
+							</div>
+							<div class="form-group">
+								<label>Secondary SSIC</label>
+								<div class="input-group">
+									<input type="text" class="form-control" name="secondary-ssic" placeholder="" required="">
+								</div>
+							</div>
+							<hr>
+							<div class="form-group">
+								<label>Appointment 1 - Position</label>
+								<div class="input-group">
+									<input type="text" class="form-control" name="position" placeholder="" required="">
+								</div>
+							</div>
+							<div class="form-group">
+								<label>Appointment 1 - NRIC</label>
+								<div class="input-group">
+									<input type="text" class="form-control" name="appoint-ic" placeholder="" required="">
+								</div>
+							</div>
+							<div class="form-group">
+								<label>Appointment 1 - Full Name</label>
+								<div class="input-group">
+									<input type="text" class="form-control" name="appoint-name" placeholder="" required="">
+								</div>
+							</div>
+							<div class="form-group">
+								<label>Appointment 1 - Appointment Date</label>
+								<div class="input-group">
+									<input type="text" class="form-control" name="appoint-date" placeholder="" required="">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-12 text-center">
+								<a href="#complete" class="btn2">Submit Application</a>
+						</div>
+				</div>
+	</div>
+	</form>
+	</section>
+
+	<script src="../../vendor/jquery/jquery-3.3.1.min.js"></script>
+	<script src="../../vendor/jquery.scrollTo.min.js"></script>
+	<script src="../../js/main.js"></script>
+	<!-- jQuery -->
+	<script src="components/jquery/jquery.min.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="components/bootstrap/js/bootstrap.min.js"></script>
+
+	<!-- Plugin JavaScript -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+	<script src="components/scrollreveal/scrollreveal.min.js"></script>
+	<script src="components/magnific-popup/jquery.magnific-popup.min.js"></script>
+
+	<!-- Theme JavaScript -->
+	<script src="js/creative.js"></script>
+	<script>
+    // this needs to be at the bottom of the page so that the page scrolling can work
+    if (scrollToAppForm == true) {
+      // scroll to application form
+			$('#form').toggleClass('hidden');
+      $('html, body').animate({
+        scrollTop: $("#form").offset().top}, 500);
+    }
+
+    if (authLevel == 'L0') {
+      $("#formPerson").show();
+    } else {
+      $("#formPerson").hide();
+    }
+  </script>
+
+</body>
+
+</html>
