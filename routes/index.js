@@ -45,7 +45,7 @@ var _entitypersonApiUrl = process.env.MYINFOBIZ_API_ENTITYPERSON;
 // var _attributes = "name,sex,race,nationality,dob,email,mobileno,regadd,housingtype,hdbtype,marital,edulevel";
 
 // Full (myinfo+myinfobiz) attributes
- var _attributes ="name,hanyupinyinname,aliasname,hanyupinyinaliasname,marriedname,sex,race,secondaryrace,dialect,nationality,dob,birthcountry,residentialstatus,passportnumber,passportexpirydate,regadd,mailadd,billadd,housingtype,hdbtype,ownerprivate,email,homeno,mobileno,marital,marriagecertno,countryofmarriage,marriagedate,divorcedate,childrenbirthrecords,edulevel,gradyear,schoolname,occupation,employment,workpassstatus,workpassexpirydate,householdincome,assessableincome,assessyear,cpfcontributions,cpfbalances,vehno,basic-profile,previous-names,previous-uens,addresses,financials,capitals,appointments,shareholders,grants";
+ var _attributes ="name,sex,race,nationality,dob,regadd,housingtype,email,mobileno,marital,edulevel,basic-profile,addresses,appointments";
 
 // myinfo attributes (without uinfin & uen)
 //var _attributes ="name,hanyupinyinname,aliasname,hanyupinyinaliasname,marriedname,sex,race,secondaryrace,dialect,nationality,dob,birthcountry,residentialstatus,passportnumber,passportexpirydate,regadd,mailadd,billadd,housingtype,hdbtype,ownerprivate,email,homeno,mobileno,marital,marriagecertno,countryofmarriage,marriagedate,divorcedate,childrenbirthrecords,edulevel,gradyear,schoolname,occupation,employment,workpassstatus,workpassexpirydate,householdincome,assessableincome,assessyear,cpfcontributions,cpfbalances,vehno";

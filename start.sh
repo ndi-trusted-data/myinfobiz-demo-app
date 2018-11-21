@@ -12,10 +12,10 @@ export MYINFO_APP_REALM=http://localhost:3001
 
 
 # L0 APIs (MyInfo Biz)
-#export AUTH_LEVEL=L0
-#export MYINFOBIZ_API_AUTHORISE='https://myinfosgstg.api.gov.sg/biz/dev/v1/authorise'
-#export MYINFOBIZ_API_TOKEN='https://myinfosgstg.api.gov.sg/biz/dev/v1/token'
-#export MYINFOBIZ_API_ENTITYPERSON='https://myinfosgstg.api.gov.sg/biz/dev/v1/entity-person'
+export AUTH_LEVEL=L0
+export MYINFOBIZ_API_AUTHORISE='https://myinfosgstg.api.gov.sg/biz/dev/v1/authorise'
+export MYINFOBIZ_API_TOKEN='https://myinfosgstg.api.gov.sg/biz/dev/v1/token'
+export MYINFOBIZ_API_ENTITYPERSON='https://myinfosgstg.api.gov.sg/biz/dev/v1/entity-person'
 
 # L2 APIs
 #export AUTH_LEVEL=L2
@@ -24,11 +24,10 @@ export MYINFO_APP_REALM=http://localhost:3001
 #export MYINFOBIZ_API_ENTITYPERSON='https://myinfosgstg.api.gov.sg/biz/test/v1/entity-person'
 
 # L2 APIs AWS
-export AUTH_LEVEL=L2
-export MYINFOBIZ_API_AUTHORISE='https://uat.api.myinfo.gov.sg/consent/myinfo-biz/v1/authorise'
-export MYINFOBIZ_API_TOKEN='https://uat.api.myinfo.gov.sg/consent/myinfo-biz/v1/token'
-export MYINFOBIZ_API_ENTITYPERSON='https://myinfosgstg.api.gov.sg/biz/test/v1/entity-person'
+#export AUTH_LEVEL=L2
+#export MYINFOBIZ_API_AUTHORISE='https://uat.api.myinfo.gov.sg/consent/myinfo-biz/v1/authorise'
+#export MYINFOBIZ_API_TOKEN='https://uat.api.myinfo.gov.sg/consent/myinfo-biz/v1/token'
+#export MYINFOBIZ_API_ENTITYPERSON='https://myinfosgstg.api.gov.sg/biz/test/v1/entity-person'
 #export MYINFOBIZ_API_ENTITYPERSON='https://myinfosg.api.gov.sg/biz/v1/entity-person'
 
 npm start
-

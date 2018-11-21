@@ -8,10 +8,10 @@ set MYINFO_APP_REDIRECT_URL=http://localhost:3001/callback
 set MYINFO_APP_REALM=http://localhost:3001
 
 rem L0 APIs
-rem set AUTH_LEVEL=L0
-rem set MYINFOBIZ_API_AUTHORISE=https://myinfosgstg.api.gov.sg/biz/dev/v1/authorise
-rem set MYINFOBIZ_API_TOKEN=https://myinfosgstg.api.gov.sg/biz/dev/v1/token
-rem set MYINFOBIZ_API_PERSON=https://myinfosgstg.api.gov.sg/biz/dev/v1/entity-person
+set AUTH_LEVEL=L0
+set MYINFOBIZ_API_AUTHORISE=https://myinfosgstg.api.gov.sg/biz/dev/v1/authorise
+set MYINFOBIZ_API_TOKEN=https://myinfosgstg.api.gov.sg/biz/dev/v1/token
+set MYINFOBIZ_API_PERSON=https://myinfosgstg.api.gov.sg/biz/dev/v1/entity-person
 
 
 rem L2 APIs
@@ -21,11 +21,10 @@ rem set MYINFOBIZ_API_TOKEN=https://myinfosgstg.api.gov.sg/biz/test/v1/token
 rem set MYINFOBIZ_API_ENTITYPERSON=https://myinfosgstg.api.gov.sg/biz/test/v1/entity-person
 
 rem L2 APIs AWS
-set AUTH_LEVEL=L2
-set MYINFOBIZ_API_AUTHORISE='https://uat.api.myinfo.gov.sg/consent/myinfo-biz/v1/authorise'
-set MYINFOBIZ_API_TOKEN='https://uat.api.myinfo.gov.sg/consent/myinfo-biz/v1/token'
-set MYINFOBIZ_API_ENTITYPERSON='https://myinfosgstg.api.gov.sg/biz/test/v1/entity-person'
+rem set AUTH_LEVEL=L2
+rem set MYINFOBIZ_API_AUTHORISE='https://uat.api.myinfo.gov.sg/consent/myinfo-biz/v1/authorise'
+rem set MYINFOBIZ_API_TOKEN='https://uat.api.myinfo.gov.sg/consent/myinfo-biz/v1/token'
+rem set MYINFOBIZ_API_ENTITYPERSON='https://myinfosgstg.api.gov.sg/biz/test/v1/entity-person'
 rem set MYINFOBIZ_API_ENTITYPERSON='https://myinfosg.api.gov.sg/biz/v1/entity-person'
 
 npm start
-
