@@ -306,22 +306,6 @@ function createTokenRequest(code) {
   }
   // t3step2a END PASTE CODE
 
-
-  console.log("Request Header for Token API:".green);
-  console.log(JSON.stringify(headers));
-
-  var request = restClient.post(_tokenApiUrl);
-
-  // Set headers
-  if (!_.isUndefined(headers) && !_.isEmpty(headers))
-    request.set(headers);
-
-  // Set Params
-  if (!_.isUndefined(params) && !_.isEmpty(params))
-    request.send(params);
-  // t3step2a END PASTE CODE
-
-
   console.log("Request Header for Token API:".green);
   console.log(JSON.stringify(headers));
 
