@@ -19,9 +19,9 @@ export MYINFO_APP_REALM=http://localhost:3001
 
 # L0 APIs AWS
 export AUTH_LEVEL=L0
-export MYINFOBIZ_API_AUTHORISE='https://staging.api.myinfo.gov.sg/biz/v1/authorise'
-export MYINFOBIZ_API_TOKEN='https://staging.api.myinfo.gov.sg/biz/v1/authorise'
-export MYINFOBIZ_API_ENTITYPERSON='https://staging.api.myinfo.gov.sg/biz/v1/authorise'
+export MYINFOBIZ_API_AUTHORISE='https://sandbox.api.myinfo.gov.sg/biz/v1/authorise'
+export MYINFOBIZ_API_TOKEN='https://sandbox.api.myinfo.gov.sg/biz/v1/authorise'
+export MYINFOBIZ_API_ENTITYPERSON='https://sandbox.api.myinfo.gov.sg/biz/v1/authorise'
 
 # L2 APIs
 #export AUTH_LEVEL=L2

@@ -15,9 +15,9 @@ rem set MYINFOBIZ_API_PERSON=https://myinfosgstg.api.gov.sg/biz/dev/v1/entity-pe
 
 rem L0 APIs AWS
 set AUTH_LEVEL=L0
-set MYINFOBIZ_API_AUTHORISE='https://staging.api.myinfo.gov.sg/biz/v1/authorise'
-set MYINFOBIZ_API_TOKEN='https://staging.api.myinfo.gov.sg/biz/v1/authorise'
-set MYINFOBIZ_API_ENTITYPERSON='https://staging.api.myinfo.gov.sg/biz/v1/authorise'
+set MYINFOBIZ_API_AUTHORISE='https://sandbox.api.myinfo.gov.sg/biz/v1/authorise'
+set MYINFOBIZ_API_TOKEN='https://sandbox.api.myinfo.gov.sg/biz/v1/authorise'
+set MYINFOBIZ_API_ENTITYPERSON='https://sandbox.api.myinfo.gov.sg/biz/v1/authorise'
 
 rem L2 APIs
 rem set AUTH_LEVEL=L2
