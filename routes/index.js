@@ -103,8 +103,8 @@ router.post('/getentitypersonData', function(req, res, next) {
         // ERROR
         console.log("Error from Token API:".red);
         console.log(callErr.status);
-        //console.log(callErr.response);
-        //console.log(callErr.response.req.res.text);
+        console.log(callErr);
+        // console.log(callErr.response.req.res.text);
         res.jsonp({
           status: "ERROR",
           msg: callErr
@@ -279,7 +279,7 @@ function createTokenRequest(code) {
     "&code=" + code +
     "&redirect_uri=" + _redirectUrl +
     "&client_id=" + _clientId +
-    "&client_secret=" + "password";//_clientSecret;
+    "&client_secret="+_clientSecret;
   var params = querystring.parse(strParams);
 
 
@@ -308,6 +308,8 @@ function createTokenRequest(code) {
 
   console.log("Request Header for Token API:".green);
   console.log(JSON.stringify(headers));
+  console.log("Request Body for Token API:".green);
+  console.log(JSON.stringify(params));
 
   var request = restClient.post(_tokenApiUrl);
 
