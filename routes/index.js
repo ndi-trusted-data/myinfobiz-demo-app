@@ -21,7 +21,7 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 // LOADED FRON ENV VARIABLE: public key from MyInfo Consent Platform given to you during onboarding for RSA digital signature
 var _publicCertContent = process.env.MYINFO_CONSENTPLATFORM_SIGNATURE_CERT_PUBLIC_CERT;
 // LOADED FRON ENV VARIABLE: your private key for RSA digital signature
-var _privateKeyContent = process.env.MYINFO_APP_SIGNATURE_CERT_PRIVATE_KEY;
+var _privateKeyContent = process.env.DEMO_APP_SIGNATURE_CERT_PRIVATE_KEY;
 // LOADED FRON ENV VARIABLE: your client_id provided to you during onboarding
 var _clientId = process.env.MYINFO_APP_CLIENT_ID;
 // LOADED FRON ENV VARIABLE: your client_secret provided to you during onboarding
