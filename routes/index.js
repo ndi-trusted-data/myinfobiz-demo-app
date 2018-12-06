@@ -278,7 +278,7 @@ function createTokenRequest(code) {
   var strParams = "grant_type=authorization_code" +
     "&code=" + code +
     "&redirect_uri=" + _redirectUrl +
-    "&client_id=" + "myinfo" + //+ _clientId +
+    "&client_id=" + _clientId +
     "&client_secret=" + "password";//_clientSecret;
   var params = querystring.parse(strParams);
 
