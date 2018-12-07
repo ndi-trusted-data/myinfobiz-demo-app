@@ -9,14 +9,14 @@ set MYINFO_APP_REALM=http://localhost:3001
 
 rem SANDBOX ENVIRONMENT (no PKI digital signature)
 set AUTH_LEVEL=L0
-set MYINFOBIZ_API_AUTHORISE='https://sandbox.api.myinfo.gov.sg/biz/v1/authorise'
-set MYINFOBIZ_API_TOKEN='https://sandbox.api.myinfo.gov.sg/biz/v1/token'
-set MYINFOBIZ_API_ENTITYPERSON='https://sandbox.api.myinfo.gov.sg/biz/v1/entity-person'
+set MYINFOBIZ_API_AUTHORISE=https://sandbox.api.myinfo.gov.sg/biz/v1/authorise
+set MYINFOBIZ_API_TOKEN=https://sandbox.api.myinfo.gov.sg/biz/v1/token
+set MYINFOBIZ_API_ENTITYPERSON=https://sandbox.api.myinfo.gov.sg/biz/v1/entity-person
 
 rem TEST ENVIRONMENT (with PKI digital signature)
 rem set AUTH_LEVEL=L2
-rem set MYINFOBIZ_API_AUTHORISE='https://test.api.myinfo.gov.sg/biz/v1/authorise'
-rem set MYINFOBIZ_API_TOKEN='https://test.api.myinfo.gov.sg/biz/v1/token'
-rem set MYINFOBIZ_API_ENTITYPERSON='https://test.api.myinfo.gov.sg/biz/v1/entity-person'
+rem set MYINFOBIZ_API_AUTHORISE=https://test.api.myinfo.gov.sg/biz/v1/authorise
+rem set MYINFOBIZ_API_TOKEN=https://test.api.myinfo.gov.sg/biz/v1/token
+rem set MYINFOBIZ_API_ENTITYPERSON=https://test.api.myinfo.gov.sg/biz/v1/entity-person
 
 npm start
