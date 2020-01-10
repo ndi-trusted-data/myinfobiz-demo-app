@@ -1,10 +1,3 @@
-Bag Attributes
-    localKeyID: 01 00 00 00
-    1.3.6.1.4.1.311.17.3.71: 43 00 53 00 32 00 00 00
-subject=C = SG, O = Netrust Pte Ltd, OU = Netrust Certificate Authority, OU = Netrust CA 2-1 (Server), OU = MyInfo, OU = Govenment Technology Agency, CN = stg.consent.myinfo.gov.sg
-
-issuer=C = SG, O = Netrust Pte Ltd, OU = Netrust Certificate Authority, CN = Netrust CA 2-1
-
 -----BEGIN CERTIFICATE-----
 MIIGtTCCBJ2gAwIBAgINAMqXqT4AAAAAV8nKdjANBgkqhkiG9w0BAQsFADBoMQsw
 CQYDVQQGEwJTRzEYMBYGA1UEChMPTmV0cnVzdCBQdGUgTHRkMSYwJAYDVQQLEx1O
