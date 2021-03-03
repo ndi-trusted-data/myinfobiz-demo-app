@@ -17,7 +17,7 @@
     "morgan": "^1.9.1",
     "node-jose": "^1.0.0",
     "nonce": "^1.0.4",
-    "pug": "^2.0.0-rc.4",
+    "pug": "^3.0.1",
     "querystring": "^0.2.0",
     "serve-favicon": "^2.5.0",
     "superagent": "^3.1.0",
