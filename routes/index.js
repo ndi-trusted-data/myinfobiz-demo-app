@@ -136,10 +136,10 @@ router.post('/getentitypersonData', function(req, res, next) {
 
 });
 
-function callEntityPersonAPI(accessToken, res) {
+async function callEntityPersonAPI(accessToken, res) {
   // validate and decode token to get UINFIN
   // t2step4 PASTE CODE BELOW
-  var decoded = securityHelper.verifyJWS(accessToken, _publicCertContent);
+  var decoded = await securityHelper.verifyJWS(accessToken, _publicCertContent);
 
   if (decoded == undefined || decoded == null) {
     res.jsonp({

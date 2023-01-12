@@ -16,10 +16,10 @@ export MYINFOBIZ_API_TOKEN='https://sandbox.api.myinfo.gov.sg/biz/v1/token'
 export MYINFOBIZ_API_ENTITYPERSON='https://sandbox.api.myinfo.gov.sg/biz/v1/entity-person'
 
 # TEST ENVIRONMENT (with PKI digital signature)
-# export AUTH_LEVEL=L2
-# export MYINFOBIZ_API_AUTHORISE='https://test.api.myinfo.gov.sg/biz/v1/authorise'
-# export MYINFOBIZ_API_TOKEN='https://test.api.myinfo.gov.sg/biz/v1/token'
-# export MYINFOBIZ_API_ENTITYPERSON='https://test.api.myinfo.gov.sg/biz/v1/entity-person'
+export AUTH_LEVEL=L2
+export MYINFOBIZ_API_AUTHORISE='https://test.api.myinfo.gov.sg/biz/v1/authorise'
+export MYINFOBIZ_API_TOKEN='https://test.api.myinfo.gov.sg/biz/v1/token'
+export MYINFOBIZ_API_ENTITYPERSON='https://test.api.myinfo.gov.sg/biz/v1/entity-person'
 
 
 npm start
